@@ -29,6 +29,7 @@ export class FiltersDiff implements IDiff<Filters> {
     diff.skipKubeDns.step(rhs?.skipKubeDns);
     diff.skipRemoteNode.step(rhs?.skipRemoteNode);
     diff.skipPrometheusApp.step(rhs?.skipPrometheusApp);
+    diff.skipKubeApiServer.step(rhs?.skipKubeApiServer);
 
     return diff;
   }
