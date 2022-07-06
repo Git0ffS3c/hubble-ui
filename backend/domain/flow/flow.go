@@ -135,22 +135,78 @@ func (f *Flow) SourcePort() *uint32 {
 func (f *Flow) String() string {
 	srcPort, dstPort := "-", "-"
 	if f.SourcePort() != nil {
-		srcPort = fmt.Sprintf("%d", f.SourcePort())
+		srcPort = fmt.Sprintf("%d", *f.SourcePort())
 	}
 
 	if f.DestinationPort() != nil {
-		dstPort = fmt.Sprintf("%d", f.DestinationPort())
+		dstPort = fmt.Sprintf("%d", *f.DestinationPort())
+	}
+
+	sourceEp := f.ref.Source
+	sourceEpDesc := "nil"
+	if sourceEp != nil {
+		sourceEpDesc = fmt.Sprintf(
+			"ID: %d, Identity: %d, ns: %s, podname: %s, labels: %v",
+			sourceEp.ID,
+			sourceEp.Identity,
+			sourceEp.Namespace,
+			sourceEp.PodName,
+			sourceEp.Labels,
+		)
+	}
+
+	sourceSvc := f.ref.SourceService
+	sourceSvcDesc := "nil"
+	if sourceSvc != nil {
+		sourceSvcDesc = fmt.Sprintf(
+			"ns: %s, name: %s",
+			sourceSvc.Namespace,
+			sourceSvc.Name,
+		)
+	}
+
+	destinationEp := f.ref.Destination
+	destinationEpDesc := "nil"
+	if destinationEp != nil {
+		destinationEpDesc = fmt.Sprintf(
+			"ID: %d, Identity: %d, ns: %s, podname: %s, labels: %v",
+			destinationEp.ID,
+			destinationEp.Identity,
+			destinationEp.Namespace,
+			destinationEp.PodName,
+			destinationEp.Labels,
+		)
+	}
+
+	destinationSvc := f.ref.DestinationService
+	destinationSvcDesc := "nil"
+	if destinationSvc != nil {
+		destinationSvcDesc = fmt.Sprintf(
+			"ns: %s, name: %s",
+			destinationSvc.Namespace,
+			destinationSvc.Name,
+		)
 	}
 
 	return fmt.Sprintf(
-		"<Flow %p, %s %s/%v (port: %v) -> %s/%v (port: %v)>",
+		"<Flow %p, protocol: %s, "+
+			"Source endpoint: %s, "+
+			"Source service: %s, "+
+			"Source names: %v, "+
+			"Source port: %v, "+
+			"Destination endpoint: %s, "+
+			"Destination service: %s, "+
+			"Destination names: %v, "+
+			"Destination port: %v>",
 		f,
 		f.ProtocolString(),
-		f.ref.Source.Namespace,
-		f.ref.Source.Identity,
+		sourceEpDesc,
+		sourceSvcDesc,
+		f.ref.SourceNames,
 		srcPort,
-		f.ref.Destination.Namespace,
-		f.ref.Destination.Identity,
+		destinationEpDesc,
+		destinationSvcDesc,
+		f.ref.DestinationNames,
 		dstPort,
 	)
 }

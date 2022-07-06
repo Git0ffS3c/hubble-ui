@@ -374,6 +374,14 @@ export class Store {
   }
 
   @action.bound
+  public toggleShowKubeApiServer(): boolean {
+    const isActive = this.controls.toggleShowKubeApiServer();
+
+    storage.saveShowKubeApiServer(isActive);
+    return isActive;
+  }
+
+  @action.bound
   public setFeatures(features: FeatureFlags) {
     console.log(`setting features`);
     this.features.set(features);
@@ -404,6 +412,9 @@ export class Store {
   private restoreVisualFilters() {
     this.controls.setShowHost(storage.getShowHost());
     this.controls.setShowKubeDns(storage.getShowKubeDns());
+    this.controls.setShowRemoteNode(storage.getShowRemoteNode());
+    this.controls.setShowKubeApiServer(storage.getShowKubeApiServer());
+    this.controls.setShowPrometheusApp(storage.getShowPrometheusApp());
   }
 
   @action.bound
