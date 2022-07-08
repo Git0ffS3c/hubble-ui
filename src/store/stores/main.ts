@@ -175,16 +175,7 @@ export class Store {
 
   @computed
   public get filters(): Filters {
-    return Filters.fromObject({
-      namespace: this.controls.currentNamespace,
-      verdict: this.controls.verdict,
-      httpStatus: this.controls.httpStatus,
-      filters: this.controls.flowFilters,
-      skipHost: !this.controls.showHost,
-      skipKubeDns: !this.controls.showKubeDns,
-      skipRemoteNode: !this.controls.showRemoteNode,
-      skipPrometheusApp: !this.controls.showPrometheusApp,
-    });
+    return this.controls.filters;
   }
 
   @action.bound

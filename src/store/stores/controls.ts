@@ -190,6 +190,7 @@ export default class ControlStore {
       skipKubeDns: !this.showKubeDns,
       skipRemoteNode: !this.showRemoteNode,
       skipPrometheusApp: !this.showPrometheusApp,
+      skipKubeApiServer: !this.showKubeApiServer,
     });
   }
 }
