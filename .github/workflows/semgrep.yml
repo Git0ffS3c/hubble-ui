@@ -11,7 +11,7 @@
 name: Semgrep
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -28,10 +28,19 @@ jobs:
       - uses: actions/checkout@v3
 
       # Scan code using project's configuration on https://semgrep.dev/manage
-      - uses: returntocorp/semgrep-action@fcd5ab7459e8d91cb1777481980d1b18b4fc6735
+      - uses: returntocorp/semgrep-action@v1
         with:
+          config: >- # more at semgrep.dev/explore
+            p/security-audit
+            p/secrets
+            p/r2c-ci
+            p/r2c-security-audit
+            p/golang
+            p/trailofbits
+            p/owasp-top-ten
+            p/semgrep-go-correctness
           generateSarif: "1"
-
+          
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
