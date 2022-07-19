@@ -31,6 +31,8 @@ jobs:
       - uses: returntocorp/semgrep-action@v1
         with:
           config: >- # more at semgrep.dev/explore
+            p/javascript
+            p/xss
             p/security-audit
             p/secrets
             p/r2c-ci
